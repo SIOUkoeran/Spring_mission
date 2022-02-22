@@ -47,7 +47,6 @@ public class PostController {
     @DeleteMapping("post/delete")
     @ResponseStatus(HttpStatus.OK)
     public Response deletePost(@RequestBody  RequestPost post){
-        System.out.println(post.toString());
         this.postService.deletePost(post);
         return new Response("2000", "DELETE_POST");
     }

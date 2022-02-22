@@ -39,6 +39,7 @@ public class Post {
         this.writer = requestPost.getWriter();
         this.password = requestPost.getPassword();
         this.content = requestPost.getContent();
+        this.boardId = requestPost.getBoardId();
     }
     @Override
     public String toString() {

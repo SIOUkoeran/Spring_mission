@@ -36,7 +36,6 @@ public class PostService {
 
     public Post update(RequestPost requestPost) {
         Post post = new Post(requestPost);
-        System.out.println(post);
         return postRepository.save(post);
     }
 

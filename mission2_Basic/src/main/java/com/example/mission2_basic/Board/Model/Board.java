@@ -23,13 +23,12 @@ public class Board {
         this.boardId = boardId;
         this.title = requestBoard.getTitle();
     }
+
     public Board(RequestBoard requestBoard){
         this.title = requestBoard.getTitle();
     }
-    public Board(Long boardId , RequestBoard requestBoard){
-        this.boardId = boardId;
-        this.title = requestBoard.getTitle();
-    }
+
+
     public void addPost(Post post){
         if (!posts.contains(post.getId())){
             this.posts.add(post.getId());

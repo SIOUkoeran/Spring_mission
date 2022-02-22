@@ -91,4 +91,5 @@ class PostServiceTest {
         Board findBoard = this.boardRepository.findById(savedBoard.getBoardId());
         Assertions.assertThat(findBoard.getPosts().size()).isEqualTo(1);
     }
+
 }

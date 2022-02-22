@@ -5,6 +5,7 @@ import com.example.mission2_basic.Board.Model.Board;
 import com.example.mission2_basic.Board.repository.BoardRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
@@ -59,7 +60,25 @@ class BoardServiceTest {
         Assertions.assertThat(findBoard.getBoardId()).isEqualTo(3L);
     }
 
+    @Test
+    @DisplayName("게시판 수정")
+    void updateBoard(){
+        createBoards10();
+        Board findBoard = this.boardService.getBoardById(3L);
+        RequestBoard requestBoard = new RequestBoard("test");
+        this.boardService.updateBoard(findBoard.getBoardId(), requestBoard);
+        Board updatedBoard = this.boardService.getBoardById(3L);
+        Assertions.assertThat(updatedBoard.getTitle()).isEqualTo("test");
+    }
 
+    @Test
+    @DisplayName("게시판 삭제")
+    void deleteBoard(){
+        createBoards10();
+        this.boardService.deleteBoardById(3L);
+        Assertions.assertThatThrownBy(() -> this.boardService.getBoardById(3L))
+                .hasMessage("없는 게시판입니다.");
+    }
 
     void createBoards10(){
         RequestBoard requestBoard;

@@ -39,6 +39,14 @@ public class RequestPost {
         this.password = password;
         this.content = content;
     }
+    public RequestPost(Long id, Long boardId, @NonNull String title, String writer, String password, String content) {
+        this.id = id;
+        this.boardId = boardId;
+        this.title = title;
+        this.writer = writer;
+        this.password = password;
+        this.content = content;
+    }
 
     @Override
     public String toString() {
