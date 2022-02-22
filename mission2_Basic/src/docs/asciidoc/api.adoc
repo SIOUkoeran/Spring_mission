@@ -1,0 +1,132 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectnums:
+:sectlinks:
+:sectanchors:
+
+
+
+[[api]]
+
+== 게시판(Board)
+
+=== 게시판 생성
+`Post` 요청을 사용해서 새로운 게시판 생성 가능
+
+include::{snippets}/board-create/request-fields.adoc[]
+
+include::{snippets}/board-create/curl-request.adoc[]
+
+include::{snippets}/board-create/request-headers.adoc[]
+
+include::{snippets}/board-create/http-response.adoc[]
+
+include::{snippets}/board-create/response-fields.adoc[]
+
+=== 게시판 수정
+
+`Put` 요청을 사용해서 새로운 게시판 생성 가능
+
+include::{snippets}/board-update/request-fields.adoc[]
+
+include::{snippets}/board-update/curl-request.adoc[]
+
+include::{snippets}/board-update/request-headers.adoc[]
+
+include::{snippets}/board-update/http-response.adoc[]
+
+include::{snippets}/board-update/response-fields.adoc[]
+
+=== 게시판 검색
+
+`Get` 요청을 사용해서 새로운 게시판 생성 가능
+
+
+include::{snippets}/board-find/curl-request.adoc[]
+
+include::{snippets}/board-find/path-parameters.adoc[]
+
+include::{snippets}/board-find/request-headers.adoc[]
+
+include::{snippets}/board-find/http-response.adoc[]
+
+include::{snippets}/board-find/response-fields.adoc[]
+
+=== 게시판 삭제
+
+`Delete` 요청을 사용해서 새로운 게시판 생성 가능
+
+include::{snippets}/board-delete/curl-request.adoc[]
+
+include::{snippets}/board-delete/http-response.adoc[]
+
+include::{snippets}/board-delete/response-fields.adoc[]
+
+== 게시물(Post)
+
+=== 게시물 생성
+
+`Post` 요청을 사용해서 새로운 게시물 생성 가능
+
+include::{snippets}/post-create/request-fields.adoc[]
+
+include::{snippets}/post-create/curl-request.adoc[]
+
+include::{snippets}/post-create/request-headers.adoc[]
+
+include::{snippets}/post-create/http-response.adoc[]
+
+include::{snippets}/post-create/response-fields.adoc[]
+
+=== 게시물 수정
+
+`Put` 요청을 사용해서 새로운 게시물 생성 가능
+
+
+include::{snippets}/post-create/request-fields.adoc[]
+
+include::{snippets}/post-create/curl-request.adoc[]
+
+include::{snippets}/post-create/request-headers.adoc[]
+
+include::{snippets}/post-create/http-response.adoc[]
+
+include::{snippets}/post-create/response-fields.adoc[]
+
+=== 게시판 별 게시물들 검색
+
+`Get` 요청을 사용해서 게시판 별 게시물들 받아오기
+
+
+include::{snippets}/post-getByBoardId/curl-request.adoc[]
+
+include::{snippets}/post-getByBoardId/path-parameters.adoc[]
+
+include::{snippets}/post-getByBoardId/request-headers.adoc[]
+
+include::{snippets}/post-getByBoardId/http-response.adoc[]
+
+include::{snippets}/post-getByBoardId/response-fields.adoc[]
+
+=== 게시물 삭제
+
+`Delete` 요청을 사용해서 새로운 게시물 생성 가능
+
+
+include::{snippets}/post-delete/curl-request.adoc[]
+
+include::{snippets}/post-delete/request-headers.adoc[]
+
+include::{snippets}/post-delete/http-response.adoc[]
+
+include::{snippets}/post-delete/response-fields.adoc[]
+
+

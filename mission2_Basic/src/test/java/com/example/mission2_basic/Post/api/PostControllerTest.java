@@ -10,13 +10,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -25,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureRestDocs
 class PostControllerTest {
 
     @Autowired
@@ -61,7 +72,29 @@ class PostControllerTest {
                 .andExpect(jsonPath("data.boardId").value(1))
                 .andExpect(jsonPath("code").value("2010"))
                 .andExpect(jsonPath("message").value("CREATE_POST"))
-                .andDo(print());
+                .andDo(print())
+                .andDo(document("post-create",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("request http content header")
+                        ),
+                        relaxedRequestFields(
+                                fieldWithPath("title").description("post title"),
+                                fieldWithPath("writer").description("post writer"),
+                                fieldWithPath("password").description("post password"),
+                                fieldWithPath("boardId").description("post board Id"),
+                                fieldWithPath("content").description("post content")
+                        ),
+                        responseFields(
+                                fieldWithPath("data").description("response data"),
+                                fieldWithPath("message").description("response message"),
+                                fieldWithPath("code").description("response custom code (HttpStatus is always 200. so, code is real status code)"),
+                                fieldWithPath("data.postId").description("created post id"),
+                                fieldWithPath("data.writer").description("created post writer"),
+                                fieldWithPath("data.title").description("created post title"),
+                                fieldWithPath("data.content").description("created post content"),
+                                fieldWithPath("data.boardId").description("created post board id")
+                        )
+                ));
     }
 
     @Test
@@ -82,7 +115,31 @@ class PostControllerTest {
                 .andExpect(jsonPath("data.writer").value("writer"))
                 .andExpect(jsonPath("data.password").value("password1"))
                 .andExpect(jsonPath("data.boardId").value(1L))
-                .andDo(print());
+                .andDo(print())
+                .andDo(document("post-update",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("request http content header")
+                        ),
+                        requestFields(
+                                fieldWithPath("id").description("post id"),
+                                fieldWithPath("title").description("post title"),
+                                fieldWithPath("writer").description("post writer"),
+                                fieldWithPath("password").description("post password"),
+                                fieldWithPath("boardId").description("post board Id"),
+                                fieldWithPath("content").description("post content")
+                        ),
+                        relaxedResponseFields(
+                                fieldWithPath("data").description("response data"),
+                                fieldWithPath("message").description("response message"),
+                                fieldWithPath("code").description("response custom code (HttpStatus is always 200. so, code is real status code)"),
+                                fieldWithPath("data.id").description("revised post id"),
+                                fieldWithPath("data.writer").description("revised post writer"),
+                                fieldWithPath("data.title").description("revised post title"),
+                                fieldWithPath("data.content").description("revised post content"),
+                                fieldWithPath("data.boardId").description("revised post board id")
+                        )
+                ))
+        ;
 
     }
     @Test
@@ -99,7 +156,25 @@ class PostControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(inputPost)))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andDo(print())
+                .andDo(document("post-delete",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("request http content header")
+                        ),
+                        requestFields(
+                                fieldWithPath("id").description("post id"),
+                                fieldWithPath("title").description("post title"),
+                                fieldWithPath("writer").description("post writer"),
+                                fieldWithPath("password").description("post password"),
+                                fieldWithPath("boardId").description("post board Id"),
+                                fieldWithPath("content").description("post content")
+                        ),
+                        responseFields(
+                                fieldWithPath("data").description("response data"),
+                                fieldWithPath("message").description("response message"),
+                                fieldWithPath("code").description("response custom code (HttpStatus is always 200. so, code is real status code)")
+                        )
+                ));
     }
 
     @Test
@@ -107,17 +182,37 @@ class PostControllerTest {
     void getPost() throws Exception{
         createBoard();
         RequestPost requestPost;
-        for (int i = 1; i < 11; i++) {
+        Long boardId = 1L;
+        for (int i = 1; i < 5; i++) {
             requestPost = new RequestPost("postTitle " + i, "writer", "password1", "content");
             this.postService.createPost(1L, requestPost);
         }
-        mockMvc.perform(get("/api/board/1/post")
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/board/{boardId}/post", boardId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("data[0].title").value("postTitle 1"))
-                .andExpect(jsonPath("data[5].title").value("postTitle 6"))
+                .andExpect(jsonPath("data[3].title").value("postTitle 4"))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andDo(print())
+                .andDo(document("post-getByBoardId",
+                requestHeaders(
+                        headerWithName(HttpHeaders.CONTENT_TYPE).description("request http content header")
+                ),
+                pathParameters(
+                    parameterWithName("boardId").description("request board id")
+                ),
+                responseFields(
+                        fieldWithPath("data").description("response data"),
+                        fieldWithPath("message").description("response message"),
+                        fieldWithPath("code").description("response custom code (HttpStatus is always 200. so, code is real status code)"),
+                        fieldWithPath("data[].postId").description("found post writer by board id"),
+                        fieldWithPath("data[].writer").description("found post writer by board id"),
+                        fieldWithPath("data[].title").description("found post writer by board id"),
+                        fieldWithPath("data[].content").description("found post writer by board id"),
+                        fieldWithPath("data[].boardId").description("found post writer by board id")
+
+                )
+        ));
 
     }
 
