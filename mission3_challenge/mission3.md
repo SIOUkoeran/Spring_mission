@@ -2,77 +2,79 @@
 
 ## DB Schema
 
-create table post (
-    id bigint not null auto_increment, 
-    created_at datetime(6), 
-    deleted_at datetime(6), 
-    updated_at datetime(6), 
-    content varchar(255), 
-    post_status varchar(255), 
-    title varchar(255), 
-    writer varchar(255), 
-    board_id bigint, 
-    user_id bigint, 
-    primary key (id)
-)
-create table shop (
-    shop_id bigint not null, 
-    created_at datetime(6), 
-    deleted_at datetime(6), 
-    updated_at datetime(6), 
-    shop_description varchar(255),
-    shop_name varchar(255), 
-    shop_status varchar(255), 
-    user_id bigint, 
-    primary key (shop_id)
-) 
-create table shop_post (
-    id bigint not null auto_increment, 
-    created_at datetime(6), 
-    deleted_at datetime(6), 
-    updated_at datetime(6), 
-    content varchar(255), 
-    shop_post_status varchar(255),
-    title varchar(255), 
-    shop_id bigint, 
-    primary key (id)
-)
-create table shop_review (
-    id bigint not null auto_increment, 
-    created_at datetime(6), 
-    deleted_at datetime(6), 
-    updated_at datetime(6), 
-    review varchar(255), 
-    review_status varchar(255), 
-    title varchar(255), 
-    shop_post_id bigint, 
-    shop_id bigint,
-    user_id bigint, 
-    primary key (id)
-)
-create table user (
-    user_id bigint not null auto_increment, 
-    password varchar(255), 
-    user_info varchar(255), 
-    user_status varchar(255), 
-    username varchar(255), 
-    primary key (user_id)
-)
-create table user_authority (
-    user_id bigint not null, 
-    authority_name varchar(255) not null
-)
+create table post (   </br>
+    id bigint not null auto_increment, </br>
+    created_at datetime(6), </br>
+    deleted_at datetime(6), </br>
+    updated_at datetime(6), </br>
+    content varchar(255), </br>
+    post_status varchar(255), </br>
+    title varchar(255), </br>
+    writer varchar(255), </br>
+    board_id bigint, </br>
+    user_id bigint, </br>
+    primary key (id) </br>
+) </br>
 
-alter table area add constraint  foreign key (user_id) references user (user_id)
-alter table board add constraint  foreign key (user_id) references user (user_id)
-alter table post add constraint  foreign key (board_id) references board (id)
-alter table post add constraint  foreign key (user_id) references user (user_id)
-alter table shop add constraint  foreign key (user_id) references user (user_id)
-alter table shop_post add constraint  foreign key (shop_id) references shop (shop_id)
-alter table shop_review add constraint  foreign key (shop_post_id) references shop_post (id)
-alter table shop_review add constraint  foreign key (shop_id) references shop (shop_id)
-alter table shop_review add constraint  foreign key (user_id) references user (user_id)
+create table shop ( </br>
+    shop_id bigint not null,  </br>
+    created_at datetime(6), </br>
+    deleted_at datetime(6), </br>
+    updated_at datetime(6), </br>
+    shop_description varchar(255),  </br>
+    shop_name varchar(255),  </br>
+    shop_status varchar(255),  </br>
+    user_id bigint,  </br>
+    primary key (shop_id) </br>
+)  </br>
+create table shop_post ( </br>
+    id bigint not null auto_increment, </br>
+    created_at datetime(6),  </br>
+    deleted_at datetime(6), </br>
+    updated_at datetime(6), </br>
+    content varchar(255), </br>
+    shop_post_status varchar(255), </br>
+    title varchar(255), </br> 
+    shop_id bigint, </br>
+    primary key (id) </br>
+) </br>
+create table shop_review ( </br>
+    id bigint not null auto_increment,  </br>
+    created_at datetime(6), </br>
+    deleted_at datetime(6), </br>
+    updated_at datetime(6), </br>
+    review varchar(255), </br>
+    review_status varchar(255), </br> 
+    title varchar(255), </br>
+    shop_post_id bigint, </br>
+    shop_id bigint, </br>
+    user_id bigint, </br>
+    primary key (id) </br>
+) </br>
+create table user ( </br>
+    user_id bigint not null auto_increment, </br>
+    password varchar(255), </br>
+    user_info varchar(255), </br>
+    user_status varchar(255), </br>
+    username varchar(255), </br>
+    primary key (user_id) </br>
+)
+create table user_authority ( </br>
+    user_id bigint not null, </br>
+    authority_name varchar(255) not null </br>
+) </br>
 
+alter table area add constraint  foreign key (user_id) references user (user_id) </br>
+alter table board add constraint  foreign key (user_id) references user (user_id) </br>
+alter table post add constraint  foreign key (board_id) references board (id) </br>
+alter table post add constraint  foreign key (user_id) references user (user_id) </br>
+alter table shop add constraint  foreign key (user_id) references user (user_id) </br>
+alter table shop_post add constraint  foreign key (shop_id) references shop (shop_id) </br>
+alter table shop_review add constraint  foreign key (shop_post_id) references shop_post (id) </br>
+alter table shop_review add constraint  foreign key (shop_id) references shop (shop_id) </br>
+alter table shop_review add constraint  foreign key (user_id) references user (user_id) </br>
+
+</br>
 - shop과 user는 1 : N 관계로 한 유저가 여러개의 shop을 가지도록 했습니다.
 - 주소 역시 독립적인 테이블로 구성해 유저 테이블과 1 : N 관계를 가지도록 했습니다.
 
