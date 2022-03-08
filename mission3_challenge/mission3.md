@@ -27,6 +27,7 @@ create table shop ( </br>
     user_id bigint,  </br>
     primary key (shop_id) </br>
 )  </br>
+
 create table shop_post ( </br>
     id bigint not null auto_increment, </br>
     created_at datetime(6),  </br>
@@ -38,6 +39,7 @@ create table shop_post ( </br>
     shop_id bigint, </br>
     primary key (id) </br>
 ) </br>
+
 create table shop_review ( </br>
     id bigint not null auto_increment,  </br>
     created_at datetime(6), </br>
@@ -51,6 +53,7 @@ create table shop_review ( </br>
     user_id bigint, </br>
     primary key (id) </br>
 ) </br>
+
 create table user ( </br>
     user_id bigint not null auto_increment, </br>
     password varchar(255), </br>
@@ -58,7 +61,8 @@ create table user ( </br>
     user_status varchar(255), </br>
     username varchar(255), </br>
     primary key (user_id) </br>
-)
+) </br>
+
 create table user_authority ( </br>
     user_id bigint not null, </br>
     authority_name varchar(255) not null </br>
