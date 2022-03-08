@@ -88,7 +88,9 @@ alter table shop_review add constraint  foreign key (user_id) references user (u
 - jwt를 통해 로그인 -> 유저의 권한에 따른 api 접근 제한(shopPostEntity 생성, 수정, 제거 제한)
 - CUSTOMER와 RETAILER로 구분
 - Point 라이브러리 사용하여 위도 경도 데이터 저장 가능.
+- 그 외 주어진 조건 만족
 
+- 로그인 예
 ```javascript
 {
 "code": "201",
@@ -115,45 +117,4 @@ alter table shop_review add constraint  foreign key (user_id) references user (u
 }
 ```
 
-```javascript
-{
-    "code": "2010",
-    "message": "CREATE_AREA",
-    "data": {
-        "address1": {
-            "province": "province",
-            "municipal": "municipal"
-        },
-        "address2": {
-            "city": "city",
-            "street": "street",
-            "country": "country"
-        },
-        "address3": {
-            "neighborhood": "neighborhood",
-            "township": "township",
-            "town": "town"
-        },
-        "user": {
-            "userId": 1,
-            "username": "alstn"
-        }
-    }
-}
-```
-```javascript
-{
-    "code": "2010",
-    "message": "CREATE_SHOP",
-    "data": [
-        {
-            "shopId": 5,
-            "shopName": "shop1",
-            "shopDescription": "shopDescription",
-            "ownerName": "alstn",
-            "ownerId": 1
-        }
-    ]
-}
-```
 
