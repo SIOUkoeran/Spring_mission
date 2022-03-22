@@ -16,6 +16,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 auth:
   jwt:
-    secretkey: thisissecretkey1239871
-    expireMills: 864000
-    refreshExpireMills: 25920002
+    secretkey: ${secretKey}
+    expireMills: ${expireMills}
+    refreshExpireMills: ${refreshExpireMills}
