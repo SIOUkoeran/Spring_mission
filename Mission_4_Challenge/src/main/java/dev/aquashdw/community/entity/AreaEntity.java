@@ -53,7 +53,18 @@ public class AreaEntity {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "AreaEntity{" +
+                "id=" + id +
+                ", regionMajor='" + regionMajor + '\'' +
+                ", regionMinor='" + regionMinor + '\'' +
+                ", regionPatch='" + regionPatch + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", user=" + user +
+                '}';
+    }
 
     public void setId(Long id) {
         this.id = id;

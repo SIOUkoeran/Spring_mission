@@ -1,13 +1,12 @@
 package dev.aquashdw.community.entity.user;
 
-import dev.aquashdw.community.dao.User;
+import dev.aquashdw.community.dto.User;
 import dev.aquashdw.community.entity.AreaEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,10 +32,8 @@ public class UserEntity {
     private Boolean isShopOwner;
 
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_authority",joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-    private List<AuthorityEntity> authorities = new ArrayList<>();
+
+    private String authorities;
 
 
 
@@ -59,16 +56,14 @@ public class UserEntity {
 
     /**
      * login Builder 생성자
-     * @param requestLogin
+     * @param requestSignUp
      */
     @Builder(builderClassName = "login", builderMethodName = "login")
-    public UserEntity(User.RequestLogin requestLogin, AuthorityEntity authorityEntity){
-        this.username = requestLogin.getUsername();
-        this.password = requestLogin.getPassword();
-        this.isShopOwner = requestLogin.getIs_shop_owner();
-        if (!authorities.contains(authorityEntity)){
-            this.authorities.add(authorityEntity);
-        }
+    public UserEntity(User.RequestSignUp requestSignUp,String password, UserInfo userInfo){
+        this.username = requestSignUp.getUsername();
+        this.password = password;
+        this.isShopOwner = requestSignUp.getIs_shop_owner();
+        this.authorities = String.valueOf(userInfo);
     }
 
 
@@ -99,5 +94,9 @@ public class UserEntity {
 
     public void setShopOwner(Boolean shopOwner) {
         isShopOwner = shopOwner;
+    }
+
+    public List<String> getAuthorities(){
+        return List.of(this.authorities);
     }
 }

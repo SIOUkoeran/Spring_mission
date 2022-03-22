@@ -10,6 +10,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsername(String username);
 
-    @EntityGraph
+    @EntityGraph(attributePaths = "authorities")
     Optional<UserEntity> findOneWithAuthoritiesByUsername(String username);
 }

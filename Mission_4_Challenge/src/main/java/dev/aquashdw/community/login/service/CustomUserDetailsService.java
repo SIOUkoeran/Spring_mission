@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private User createUser(String username, UserEntity user){
         List<GrantedAuthority> authorities = user.getAuthorities()
                 .stream()
-                .map(authorityEntity -> new SimpleGrantedAuthority(authorityEntity.getAuthorityName()))
+                .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
         return new User(user.getUsername(), user.getPassword(), authorities);
     }

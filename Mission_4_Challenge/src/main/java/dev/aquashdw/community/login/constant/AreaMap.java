@@ -9,6 +9,5 @@ public class AreaMap {
         map.put(1,AreaConstant.DUMMY1);
         map.put(2,AreaConstant.DUMMY2);
         map.put(3,AreaConstant.DUMMY3);
-
     }
 }

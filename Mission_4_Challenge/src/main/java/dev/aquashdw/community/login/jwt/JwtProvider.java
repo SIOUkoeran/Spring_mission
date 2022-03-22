@@ -1,10 +1,10 @@
 package dev.aquashdw.community.login.jwt;
 
 
-import dev.aquashdw.community.login.exception.CustomUnsupportedJwtException;
-import dev.aquashdw.community.login.exception.ExpiredTokenException;
-import dev.aquashdw.community.login.exception.InvalidSignatureException;
-import dev.aquashdw.community.login.exception.InvalidTokenException;
+import dev.aquashdw.community.exception.CustomUnsupportedJwtException;
+import dev.aquashdw.community.exception.ExpiredTokenException;
+import dev.aquashdw.community.exception.InvalidSignatureException;
+import dev.aquashdw.community.exception.InvalidTokenException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

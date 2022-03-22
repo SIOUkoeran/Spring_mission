@@ -1,9 +1,9 @@
-package dev.aquashdw.community.login.exception.exceptionHandler;
+package dev.aquashdw.community.exception.exceptionHandler;
 
 
-import dev.aquashdw.community.dao.common.ErrorCode;
-import dev.aquashdw.community.dao.common.response.ErrorResponse;
-import dev.aquashdw.community.login.exception.NotEqualUserSignUpPasswordException;
+import dev.aquashdw.community.dto.common.ErrorCode;
+import dev.aquashdw.community.dto.common.response.ErrorResponse;
+import dev.aquashdw.community.exception.NotEqualUserSignUpPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

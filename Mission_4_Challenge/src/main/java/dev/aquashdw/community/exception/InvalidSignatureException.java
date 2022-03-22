@@ -1,8 +1,8 @@
-package dev.aquashdw.community.login.exception;
+package dev.aquashdw.community.exception;
 
 
-import dev.aquashdw.community.dao.common.CustomException;
-import dev.aquashdw.community.dao.common.ErrorCode;
+import dev.aquashdw.community.dto.common.CustomException;
+import dev.aquashdw.community.dto.common.ErrorCode;
 
 public class InvalidSignatureException extends CustomException {
     public InvalidSignatureException() {

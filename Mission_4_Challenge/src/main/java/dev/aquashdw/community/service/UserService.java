@@ -1,21 +1,22 @@
 package dev.aquashdw.community.service;
 
 import dev.aquashdw.community.controller.dto.UserDto;
-import dev.aquashdw.community.dao.User;
+import dev.aquashdw.community.dto.User;
 import dev.aquashdw.community.entity.AreaEntity;
-import dev.aquashdw.community.entity.user.AuthorityEntity;
 import dev.aquashdw.community.entity.user.UserEntity;
 import dev.aquashdw.community.entity.user.UserInfo;
 import dev.aquashdw.community.login.constant.AreaConstant;
 import dev.aquashdw.community.login.constant.AreaMap;
-import dev.aquashdw.community.login.exception.NotEqualUserSignUpPasswordException;
-import dev.aquashdw.community.login.exception.UserDuplicateException;
+import dev.aquashdw.community.exception.NotEqualUserSignUpPasswordException;
+import dev.aquashdw.community.exception.UserDuplicateException;
 import dev.aquashdw.community.repository.AreaRepository;
 import dev.aquashdw.community.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -28,13 +29,12 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final AreaRepository areaRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(
-            UserRepository userRepository,
-            AreaRepository areaRepository
-    ) {
+    public UserService(UserRepository userRepository, AreaRepository areaRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.areaRepository = areaRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDto createUser(UserDto userDto){
@@ -92,30 +92,34 @@ public class UserService {
         this.userRepository.deleteById(id);
     }
 
-    public User.ResponseLogin signUpUser(User.RequestLogin signupForm) {
+    @Transactional
+    public User.ResponseLogin signUpUser(User.RequestSignUp signupForm) {
+
         if (this.userRepository.findOneWithAuthoritiesByUsername(signupForm.getUsername()).isPresent()){
             throw new UserDuplicateException();
         }
         if (!signupForm.getPassword().equals(signupForm.getPassword_check())){
             throw new NotEqualUserSignUpPasswordException();
         }
-        AuthorityEntity authorityEntity;
+        UserInfo userInfo;
 
         if (signupForm.getIs_shop_owner()){
-            authorityEntity = new AuthorityEntity(String.valueOf(UserInfo.SHOP_OWNER));
+            userInfo = UserInfo.SHOP_OWNER;
         }else{
-            authorityEntity = new AuthorityEntity(String.valueOf(UserInfo.CUSTOMER));
+            userInfo = UserInfo.CUSTOMER;
         }
 
         UserEntity user = UserEntity
                 .login()
-                .requestLogin(signupForm)
-                .authorityEntity(authorityEntity)
+                .requestSignUp(signupForm)
+                .password(passwordEncoder.encode(signupForm.getPassword()))
+                .userInfo(userInfo)
                 .build();
 
         AreaEntity areaEntity = AreaEntity.builder()
                 .areaConstant(returnRandomArea())
                 .build();
+        this.areaRepository.save(areaEntity);
         user.setResidence(areaEntity);
         UserEntity savedUser = this.userRepository.save(user);
         return new User.ResponseLogin(savedUser.getUsername(), savedUser.getId());
@@ -123,6 +127,8 @@ public class UserService {
 
     private AreaConstant returnRandomArea(){
         Random rand = new Random();
-        return AreaMap.map.get(rand.nextInt(AreaMap.map.size()));
+        int a = rand.nextInt(AreaMap.map.size()) + 1;
+        logger.info("a : {}" , a);
+        return AreaMap.map.get(a);
     }
 }

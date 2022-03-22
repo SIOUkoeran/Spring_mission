@@ -1,4 +1,4 @@
-package dev.aquashdw.community.dao.common.token;
+package dev.aquashdw.community.dto.common.token;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

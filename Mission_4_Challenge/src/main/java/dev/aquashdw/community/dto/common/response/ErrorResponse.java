@@ -1,4 +1,4 @@
-package dev.aquashdw.community.dao.common.response;
+package dev.aquashdw.community.dto.common.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;

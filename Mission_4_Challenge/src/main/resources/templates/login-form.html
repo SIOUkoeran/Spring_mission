@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<form th:action="@{/user/signin}" method="post" th:object = "${login}">
+    <input type="text" name="username" th:field="*{username}" placeholder="아이디" class="form-control"><br>
+    <input type="password" name="password" th:field = "*{password}" placeholder="비밀번호" class="form-control"><br>
+    <button type="submit">로그인</button>
+</form>
+</body>
+</html>

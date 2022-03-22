@@ -1,4 +1,4 @@
-package dev.aquashdw.community.dao.common;
+package dev.aquashdw.community.dto.common;
 
 public class CustomException extends RuntimeException{
 
