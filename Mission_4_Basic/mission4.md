@@ -45,4 +45,12 @@ public enum AreaConstant {
 }
 ```
 
+# 화면 예시
 
+![image](https://user-images.githubusercontent.com/35398494/159499294-97d3eaf7-408e-4c18-a90e-89e9de58f0ce.png)
+
+![image](https://user-images.githubusercontent.com/35398494/159499572-1f435d09-5a8b-4deb-81c2-6f9436b48259.png)
+
+![image](https://user-images.githubusercontent.com/35398494/159499612-ed696887-3e4a-46fa-b87b-5f22f81bd981.png)
+
+![image](https://user-images.githubusercontent.com/35398494/159499884-eb63a5d4-1e21-4ea9-82f5-98198454e8ae.png)
